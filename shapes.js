@@ -50,7 +50,18 @@ const bigBall = Bodies.circle(w / 2, h / 2, 250, {
     }
 })
 
-World.add(engine.world, bigBall)
+// create the ground - width, height etc is positioning to get it into the right spot
+const ground = Bodies.rectangle(w / 2, h + 50, w + 100, 100, {
+    isStatic: true,
+    render: {
+        visible: false
+    }
+})
+
+World.add(engine.world, [
+    bigBall, 
+    ground
+])
 
 
 
