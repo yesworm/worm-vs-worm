@@ -8,7 +8,7 @@
 // const Render = Matter.Render
 
 // using one line of code instead of multi-line aliases 
-const {Engine, Render} = Matter
+const {Engine, Render, Bodies, World} = Matter
 
 
 // where matter is being deployed
@@ -31,6 +31,22 @@ const renderer = Render.create({
         pixelRatio: window.devicePixelRatio
     }
 })
+
+// create a shape on the page 
+const createShape = function(x, y) {
+    return Bodies.circle(x, y, 20 + 20 * Math.random())
+}
+
+
+// when we click page add a new shape 
+document.addEventListener("click", function(event) {
+    const shape = createShape(event.pageX, event.pageY)
+    World.add(engine.world, shape)
+
+})
+
+
+
 
 
 // run the engine and the renderer before anything happens
