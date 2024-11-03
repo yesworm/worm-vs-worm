@@ -34,8 +34,25 @@ const renderer = Render.create({
 
 // create a shape on the page 
 const createShape = function(x, y) {
-    return Bodies.circle(x, y, 20 + 20 * Math.random())
+    return Bodies.circle(x, y, 20 + 20 * Math.random(), {
+        render: {
+            fillStyle: "red"
+        }
+    })
 }
+
+
+// create a shape in the middle of the page 
+const bigBall = Bodies.circle(w / 2, h / 2, 250, {
+    isStatic: true,
+    render: {
+        fillStyle: "#ffffff"
+    }
+})
+
+World.add(engine.world, bigBall)
+
+
 
 
 // when we click page add a new shape 
@@ -44,7 +61,6 @@ document.addEventListener("click", function(event) {
     World.add(engine.world, shape)
 
 })
-
 
 
 
