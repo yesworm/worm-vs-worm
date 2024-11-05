@@ -3,12 +3,12 @@
 // secondly, need a renderer to draw all the engine 
 
 
-//alias is a way to make our code cleaner 
+// alias is a way to make our code cleaner 
 // const Engine = Matter.Engine
 // const Render = Matter.Render
 
 // using one line of code instead of multi-line aliases 
-const {Engine, Render, Bodies, World, MouseConstraint} = Matter
+const {Engine, Render, Bodies, World, MouseConstraint, Composites} = Matter
 
 
 // where matter is being deployed
@@ -34,19 +34,25 @@ const renderer = Render.create({
 
 // create a shape on the page 
 const createShape = function(x, y) {
-    return Bodies.circle(x, y, 20 + 20 * Math.random(), {
+    return Bodies.circle(x, y, 25, {
         render: {
-            fillStyle: "red"
+            sprite: {
+                texture: "/assets/meatball.png",
+                xScale: 0.5,
+                yScale: 0.5
+            }
         }
     })
 }
 
 
 // create a shape in the middle of the page 
-const bigBall = Bodies.circle(w / 2, h / 2, 250, {
+const bigBall = Bodies.circle(w / 2, h / 2, 100, {
     isStatic: true,
     render: {
-        fillStyle: "#ffffff"
+        sprite: {
+            texture: "assets/earth.png"
+        }
     }
 })
 
@@ -73,6 +79,10 @@ const mouseControl = MouseConstraint.create(engine, {
     }
     })
 
+// stack takes in location xx, yy, columns & rows, column and row gaps, & callback - which basically means what's being added - eg, a function
+const initalShapes = Composites.stack(50, 50, 15, 5, 40, 40, function(x, y) {
+    return createShape(x, y)
+})    
 
 
 World.add(engine.world, [
@@ -81,9 +91,9 @@ World.add(engine.world, [
     ceiling,
     leftWall,
     rightWall,
-    mouseControl
+    mouseControl,
+    initalShapes
 ])
-
 
 
 
@@ -93,7 +103,6 @@ document.addEventListener("click", function(event) {
     World.add(engine.world, shape)
 
 })
-
 
 
 
